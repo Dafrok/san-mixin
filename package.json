@@ -4,7 +4,7 @@
   "description": "mixin function for san framework",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jasmine"
   },
   "repository": {
     "type": "git",
@@ -19,5 +19,12 @@
   "bugs": {
     "url": "https://github.com/Dafrok/san-mixin/issues"
   },
-  "homepage": "https://github.com/Dafrok/san-mixin#readme"
+  "homepage": "https://github.com/Dafrok/san-mixin#readme",
+  "devDependencies": {
+    "jasmine": "^3.1.0",
+    "san": "^3.5.6"
+  },
+  "peerDependencies": {
+    "san": "^3.5.6"
+  }
 }

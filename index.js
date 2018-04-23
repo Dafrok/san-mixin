@@ -20,9 +20,10 @@
             switch (key) {
                 case 'initData':
                     var initData = proto
-                    Component.prototype[key] = initDate ? function () {
+                    Component.prototype[key] = initData ? function () {
                         return merge(initData(), mixin())
                     } : mixin
+                    break
                 case 'compiled':
                 case 'inited':
                 case 'created':
@@ -31,7 +32,7 @@
                 case 'disposed':
                 case 'updated':
                     var lifeCycle = proto
-                    Component.prototype[key] = hook ? function () {()
+                    Component.prototype[key] = proto ? function () {
                         lifeCycle()
                         mixin()
                     } : mixin

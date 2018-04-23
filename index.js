@@ -19,10 +19,9 @@
             var mixin = mixins[key]
             switch (key) {
                 case 'initData':
-                    var initData = proto
-                    Component.prototype[key] = initData ? function () {
-                        return merge(initData(), mixin())
-                    } : mixin
+                    Component.prototype[key] = function () {
+                        return merge(mixin(), proto ? proto() : {})
+                    }
                     break
                 case 'compiled':
                 case 'inited':
@@ -31,26 +30,24 @@
                 case 'detached':
                 case 'disposed':
                 case 'updated':
-                    var lifeCycle = proto
-                    Component.prototype[key] = proto ? function () {
-                        lifeCycle()
+                    Component.prototype[key] = function () {
                         mixin()
-                    } : mixin
-                    break
-                case 'delimiters':
-                case 'trimWhitespace':
-                case 'template':
-                    Component.prototype[key] = proto || mixin
+                        proto && proto()
+                    }
                     break
                 case 'computed':
                 case 'messages':
                 case 'components':
                 case 'filters':
-                    Component.prototype[key] = merge(proto || {}, mixin)
+                    Component.prototype[key] = merge(mixin, proto || {})
                     break
+                // case 'delimiters':
+                // case 'trimWhitespace':
+                // case 'template':
+                //     Component.prototype[key] = proto || mixin
+                //     break
                 default:
-                    Component.prototype[key] = mixin
-                    break
+                    Component.prototype[key] = proto || mixin
             }
         }
         return Component

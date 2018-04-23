@@ -20,7 +20,7 @@
             switch (key) {
                 case 'initData':
                     var initData = proto
-                    proto = initDate ? function () {
+                    Component.prototype[key] = initDate ? function () {
                         return merge(initData(), mixin())
                     } : mixin
                 case 'compiled':
@@ -31,24 +31,24 @@
                 case 'disposed':
                 case 'updated':
                     var lifeCycle = proto
-                    proto = hook ? function () {
-                        mixin()
+                    Component.prototype[key] = hook ? function () {()
                         lifeCycle()
+                        mixin()
                     } : mixin
                     break
                 case 'delimiters':
                 case 'trimWhitespace':
                 case 'template':
-                    proto = proto || mixin
+                    Component.prototype[key] = proto || mixin
                     break
                 case 'computed':
                 case 'messages':
                 case 'components':
                 case 'filters':
-                    merge(proto || {}, mixin)
+                    Component.prototype[key] = merge(proto || {}, mixin)
                     break
                 default:
-                    proto = mixin
+                    Component.prototype[key] = mixin
                     break
             }
         }

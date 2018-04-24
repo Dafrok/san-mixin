@@ -6,34 +6,42 @@ describe('mixin', function () {
     it('init data', function () {
         const Component = san.defineComponent({
             initData() {
-                return {foo: true}
+                return {foo: true, from: 'component', func: () => {
+                    return this.data.get('foo');
+                }}
             }
         })
         mixin(Component, {
             initData() {
-                return {bar: true}
+                return {bar: true, from: 'mixin'}
             }
         })
         const component = new Component()
         expect(component.data.get('foo')).toBe(true)
         expect(component.data.get('bar')).toBe(true)
+        expect(component.data.get('func')()).toBe(true)
+        expect(component.data.get('from')).toBe('component')
     })
 
     it('life cycles', function () {
         const probe = {}
         const Component = san.defineComponent({
-            compiled() {
+            inited() {
+                this.data.set('name', 'foo')
                 probe.compiled1 = true
             }
         })
         mixin(Component, {
-            compiled() {
+            inited() {
+                this.data.set('age', 16)
                 probe.compiled2 = true
             }
         })
-        new Component()
+        const component = new Component()
         expect(probe.compiled1).toBe(true)
         expect(probe.compiled2).toBe(true)
+        expect(component.data.get('name')).toBe('foo')
+        expect(component.data.get('age')).toBe(16)
     })
 
     it('attributes', function () {

@@ -2,9 +2,10 @@
   "name": "san-mixin",
   "version": "0.2.1",
   "description": "mixin function for san framework",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "jasmine"
+    "build": "rollup -i src/index.js -o dist/index.js -f umd --name sanMixin",
+    "test": "karma start ./test/karma.conf.js --single-run"
   },
   "repository": {
     "type": "git",
@@ -23,8 +24,10 @@
   "devDependencies": {
     "jasmine": "^3.1.0",
     "karma": "^2.0.2",
+    "karma-chrome-launcher": "^2.2.0",
     "karma-coverage": "^1.1.1",
     "karma-jasmine": "^1.1.1",
+    "rollup": "^0.58.2",
     "san": "^3.5.6"
   },
   "peerDependencies": {

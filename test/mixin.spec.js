@@ -1,5 +1,4 @@
-const san = require('san')
-const mixin = require('../index.js')
+var mixin = sanMixin
 
 describe('mixin', function () {
 
@@ -23,18 +22,34 @@ describe('mixin', function () {
         expect(component.data.get('from')).toBe('component')
     })
 
+    it('init data with no initial data', function () {
+        const Component = san.defineComponent({})
+        mixin(Component, {
+            initData() {
+                return {foo: true}
+            }
+        })
+        const component = new Component()
+        expect(component.data.get('foo')).toBe(true)
+    })
+
     it('life cycles', function () {
+        const probe = {}
         const Component = san.defineComponent({
             inited() {
                 this.data.set('foo', true)
             }
         })
         mixin(Component, {
+            compiled() {
+                probe.foo = true
+            },
             inited() {
                 this.data.set('bar', true)
             }
         })
         const component = new Component()
+        expect(probe.foo).toBe(true)
         expect(component.data.get('foo')).toBe(true)
         expect(component.data.get('bar')).toBe(true)
     })
@@ -52,24 +67,41 @@ describe('mixin', function () {
         const Component = san.defineComponent({
             computed: {
                 foo() {
-                    return this.data.get('foo')
+                    return this.data.get('baz')
                 }
             }
         })
         mixin(Component, {
             computed: {
                 bar() {
-                    return this.data.get('foo')
+                    return this.data.get('baz')
                 }
             }
         })
         const component = new Component({
             data: {
-                foo: true
+                baz: true
             }
         })
         expect(component.data.get('foo')).toBe(true)
         expect(component.data.get('bar')).toBe(true)
+    })
+
+    it('special members without initial member', function () {
+        const Component = san.defineComponent({})
+        mixin(Component, {
+            computed: {
+                foo() {
+                    return this.data.get('bar')
+                }
+            }
+        })
+        const component = new Component({
+            data: {
+                bar: true
+            }
+        })
+        expect(component.data.get('foo')).toBe(true)
     })
 
     it('member functions', function () {

@@ -1,20 +1,13 @@
-;(function (root, factory) {
-    if (typeof exports === 'object') {
-        module.exports = factory()
-    } else if (typeof define === 'function' && define.amd) {
-        define(factory)
-    } else {
-        root.sanMixin = factory()
+function merge(oldObj, newObj) {
+    for (var key in newObj) {
+        oldObj[key] = newObj[key]
     }
-})(this, function() {
-    function merge(oldObj, newObj) {
-        for (var key in newObj) {
-            oldObj[key] = newObj[key]
-        }
-        return oldObj
-    }
-    return function mixin(Component, mixins) {
-        for (var key in mixins) {
+    return oldObj
+}
+
+export default function mixin(Component, mixins) {
+    for (var key in mixins) {
+        ~function (key) {
             var proto = Component.prototype[key]
             var mixin = mixins[key]
             switch (key) {
@@ -49,7 +42,7 @@
                 default:
                     Component.prototype[key] = proto || mixin
             }
-        }
-        return Component
+        }(key)
     }
-})
+    return Component
+}

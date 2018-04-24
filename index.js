@@ -20,7 +20,7 @@
             switch (key) {
                 case 'initData':
                     Component.prototype[key] = function () {
-                        return merge(mixin(), proto ? proto() : {})
+                        return merge(mixin.call(this), proto ? proto.call(this) : {})
                     }
                     break
                 case 'compiled':
@@ -31,8 +31,8 @@
                 case 'disposed':
                 case 'updated':
                     Component.prototype[key] = function () {
-                        mixin()
-                        proto && proto()
+                        mixin.call(this)
+                        proto && proto.call(this)
                     }
                     break
                 case 'computed':

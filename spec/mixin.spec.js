@@ -24,24 +24,19 @@ describe('mixin', function () {
     })
 
     it('life cycles', function () {
-        const probe = {}
         const Component = san.defineComponent({
             inited() {
-                this.data.set('name', 'foo')
-                probe.compiled1 = true
+                this.data.set('foo', true)
             }
         })
         mixin(Component, {
             inited() {
-                this.data.set('age', 16)
-                probe.compiled2 = true
+                this.data.set('bar', true)
             }
         })
         const component = new Component()
-        expect(probe.compiled1).toBe(true)
-        expect(probe.compiled2).toBe(true)
-        expect(component.data.get('name')).toBe('foo')
-        expect(component.data.get('age')).toBe(16)
+        expect(component.data.get('foo')).toBe(true)
+        expect(component.data.get('bar')).toBe(true)
     })
 
     it('attributes', function () {
@@ -57,37 +52,43 @@ describe('mixin', function () {
         const Component = san.defineComponent({
             computed: {
                 foo() {
-                    return true
+                    return this.data.get('foo')
                 }
             }
         })
         mixin(Component, {
             computed: {
                 bar() {
-                    return true
+                    return this.data.get('foo')
                 }
             }
         })
-        const component = new Component()
+        const component = new Component({
+            data: {
+                foo: true
+            }
+        })
         expect(component.data.get('foo')).toBe(true)
         expect(component.data.get('bar')).toBe(true)
     })
 
     it('member functions', function () {
-        const probe = {}
         const Component = san.defineComponent({
             foo() {
-                return true
+                return this.data.get('foo')
             }
         })
         mixin(Component, {
             bar() {
-                return true
+                return this.data.get('bar')
             }
         })
-        const component = new Component()
-        component.foo()
-        component.bar()
+        const component = new Component({
+            data: {
+                foo: true,
+                bar: true
+            }
+        })
         expect(component.foo()).toBe(true)
         expect(component.bar()).toBe(true)
     })

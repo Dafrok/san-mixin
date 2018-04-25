@@ -10,7 +10,7 @@ module.exports = function(config) {
         // list of files / patterns to load in the browser
         files: [
             'node_modules/san/dist/san.dev.js',
-            'dist/index.js',
+            'dist/index.test.js',
             'test/**/*.spec.js',
         ],
         // list of files to exclude
@@ -18,7 +18,7 @@ module.exports = function(config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'dist/index.js': 'coverage'
+            'dist/index.test.js': 'coverage'
         },
         // test results reporter to use
         // possible values: 'dots', 'progress'

@@ -5,7 +5,9 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "rollup -i src/index.js -o dist/index.js -f umd --name sanMixin",
-    "test": "karma start ./test/karma.conf.js --single-run"
+    "build:test": "rollup -i src/index.js -o dist/index.test.js -f iife --name sanMixin",
+    "test": "npm run build:test && karma start ./test/karma.conf.js --single-run",
+    "codecov": "codecov"
   },
   "repository": {
     "type": "git",
@@ -22,6 +24,7 @@
   },
   "homepage": "https://github.com/Dafrok/san-mixin#readme",
   "devDependencies": {
+    "codecov": "^3.0.0",
     "jasmine": "^3.1.0",
     "karma": "^2.0.2",
     "karma-chrome-launcher": "^2.2.0",

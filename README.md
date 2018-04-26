@@ -6,6 +6,11 @@
 npm i san-mixin
 ```
 
+## Arguments
+
+- Component {Object} san component
+- mixins {Object} mixin prototypes
+
 ## Usage
 
 ```js

@@ -32,7 +32,7 @@ export default function mixin(Component, mixins) {
                 case 'messages':
                 case 'components':
                 case 'filters':
-                    Component.prototype[key] = merge(mixin, proto || {})
+                    Component.prototype[key] = merge(merge({}, mixin), proto || {})
                     break
                 // case 'delimiters':
                 // case 'trimWhitespace':
